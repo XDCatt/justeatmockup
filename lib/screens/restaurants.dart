@@ -5,6 +5,8 @@ import '../models/restaurant.dart';
 class HomeScreen extends StatelessWidget {
   final ApiService _apiService = ApiService();
 
+  HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Restaurant Finder'),
       ),
       body: FutureBuilder<List<Restaurant>>(
-        future: _apiService.fetchRestaurants('EC4M7RF'),
+        future: _apiService.fetchRestaurants('SW1A1AA'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
