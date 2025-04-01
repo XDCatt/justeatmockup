@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/restaurant.dart';
+import 'package:logger/logger.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/';
 
+  final Logger logger = Logger();
+
   Future<List<Restaurant>> fetchRestaurants(String postcode) async {
     try {
       final response = await http.get(Uri.parse('$_baseUrl$postcode'));
-      print(response.body);
+      logger.i(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final List<dynamic> restaurantData = data['restaurants'] ?? [];
