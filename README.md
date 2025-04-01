@@ -62,7 +62,7 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 - Uses null-safe operators (?., ??) to handle missing or null fields gracefully.
 
 ### Key Decisions
-- Hardcoded Postcode: Chose "EC4M7RF" to focus on displaying data rather than building an input system, per the assignment’s emphasis on presentation.
+- Hardcoded Postcode: Chose "SW1A1AA" to focus on displaying data rather than building an input system, per the assignment’s emphasis on presentation.
 - Minimal Dependencies: Only added http to keep the app lightweight.
 - Card Layout: Opted for Card over ListTile for a more modern, mobile-app aesthetic.
 
