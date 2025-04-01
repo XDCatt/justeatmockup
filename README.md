@@ -37,8 +37,40 @@ The `Restaurant` class parses the required fields from the API response into a s
       ?.map((cuisine) => cuisine['name'] as String)
       .toList() ?? [],
 
+- **Rating**: Source: Retrieved from `json['rating']['starRating']` (e.g., 4.2) as a number, cast to `double`.
+Parsing: Uses null-safe access and defaults to 0.0 if missing.
+Display: Shown as "Rating: 4.2" in the UI, meeting the assignment’s requirement for a numeric value.
+  ```dart
+  rating: (json['rating']?['starRating'] as num?)?.toDouble() ?? 0.0,
+  ```
+
+- **Address**:  Taken from `json['address']['firstLine']` (e.g., "62 Upper Street"). Defaults to "No address available" if absent.
+  ```dart
+  address: json['address']?['firstLine'] ?? 'No address available',
+  ```
+
+### UI Design
+- Widget Choice: A FutureBuilder manages the asynchronous API call, displaying a loading spinner, error message, or the restaurant list based on the state.
+- Restaurant Display: Each restaurant is shown in a Card widget with:
+name in bold as the title.
+address, rating, and cuisines listed vertically below.
+cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
+- Styling: Basic padding and font adjustments ensure a clean, readable layout.
+
+### Error Handling
+- Checks for HTTP status codes (e.g., 200 OK) and throws exceptions for failures.
+- Uses null-safe operators (?., ??) to handle missing or null fields gracefully.
+
+### Key Decisions
+- Hardcoded Postcode: Chose "EC4M7RF" to focus on displaying data rather than building an input system, per the assignment’s emphasis on presentation.
+- Minimal Dependencies: Only added http to keep the app lightweight.
+- Card Layout: Opted for Card over ListTile for a more modern, mobile-app aesthetic.
+
 ## Improvements
-- Add a text field for user-input postcodes.
+- Add a text field for user-input postcodes and fetch the corresponding location.
 - Enhance UI with colors or icons (e.g., star for rating).
 - Handle edge cases like missing data more gracefully.
 - Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
+- Add an avatar
+- Create features branch and go through pull-request procedures.
+- 
