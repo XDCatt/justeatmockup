@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:justeatmockup/models/rating.dart';
+import 'address.dart';
 
 part 'restaurant.g.dart';
 
@@ -9,11 +11,9 @@ class Restaurant {
   @JsonKey(fromJson: _cuisinesFromJson)
   final List<String> cuisines;
 
-  @JsonKey(name: 'rating', fromJson: _ratingFromJson)
-  final double rating;
+  final Rating rating;
 
-  @JsonKey(name: 'address', fromJson: _addressFromJson)
-  final String address;
+  final Address address;
 
   Restaurant({
     required this.name,
@@ -26,18 +26,8 @@ class Restaurant {
 
   Map<String, dynamic> toJson() => _$RestaurantToJson(this);
 
-  // Custom parsing for cuisines (extracts 'name' from each cuisine object)
   static List<String> _cuisinesFromJson(List<dynamic>? cuisines) {
     return cuisines?.map((cuisine) => cuisine['name'] as String).toList() ?? [];
   }
 
-  // Custom parsing for rating (extracts 'starRating')
-  static double _ratingFromJson(Map<String, dynamic>? rating) {
-    return (rating?['starRating'] as num?)?.toDouble() ?? 0.0;
-  }
-
-  // Custom parsing for address (extracts 'firstLine')
-  static String _addressFromJson(Map<String, dynamic>? address) {
-    return address?['firstLine'] ?? 'No address available';
-  }
 }

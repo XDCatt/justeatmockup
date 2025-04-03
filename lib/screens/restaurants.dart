@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:justeatmockup/widgets/user_location_aware.dart';
 import '../services/api_service.dart';
 import '../models/restaurant.dart';
+import '../utils/geo_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -106,9 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             elevation: 3,
                             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                            color: restaurant.rating < 4.0
+                            color: restaurant.rating.starRating < 4.0
                               ? const Color.fromARGB(255, 136, 242, 170).withOpacity(0.8)
-                              : (restaurant.rating < 4.5
+                              : (restaurant.rating.starRating < 4.5
                                 ? const Color.fromARGB(255, 246, 243, 82).withOpacity(0.8)
                                 : const Color.fromRGBO(238, 162, 164, 0.8)),
                             child: Padding(
@@ -121,8 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(height: 5),
-                                  Text('Address: ${restaurant.address}'),
-                                  Text('Rating: ${restaurant.rating}'),
+                                  Text('Address: ${restaurant.address.firstLine}'),
+                                  Text('Distance: ${GeoUtils.calculateDistance(userLocation, restaurant.address.location.toGeoPoint()).toStringAsFixed(2)} m'),
+                                  Text('Rating: ${restaurant.rating.starRating} (${restaurant.rating.count} reviews)'),
                                   Text('Cuisines: ${restaurant.cuisines.join(', ')}'),
                                 ],
                               ),
