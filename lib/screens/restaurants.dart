@@ -84,7 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final restaurant = restaurants[index];
                     return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 3,
                       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      color: restaurant.rating < 4.0
+                        ? const Color.fromARGB(255, 136, 242, 170).withOpacity(0.8)
+                        : (restaurant.rating < 4.5
+                          ? const Color.fromARGB(255, 246, 243, 82).withOpacity(0.8)
+                          : const Color.fromRGBO(238, 162, 164, 0.8)),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Column(

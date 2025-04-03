@@ -67,8 +67,8 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 - Card Layout: Opted for Card over ListTile for a more modern, mobile-app aesthetic.
 
 ## Improvements
-- Add a text field for user-input postcodes and fetch the corresponding location.
-- Enhance UI with colors or icons (e.g., star for rating).
+- [x] Add a text field for user-input postcodes and fetch the corresponding location.
+- [ ] Enhance UI with colors or icons (e.g., star for rating).
 - Handle edge cases like missing data more gracefully.
 - Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
 - Add an avatar
