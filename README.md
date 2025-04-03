@@ -29,13 +29,14 @@ This Flutter app fetches restaurant data from the Just Eat Takeaway.com API and 
 - **Parsing**: The JSON response is decoded, and the `restaurants` array is limited to the first 10 entries using `.take(10)`.
 
 ### Data Parsing in `Restaurant` Model
-The `Restaurant` class parses the required fields from the API response into a structured Dart object:
-- **Name**: Extracted from `json['name']` (e.g., "Chicken Shop - Upper Street"). Defaults to "Unknown Restaurant" if missing.
-- **Cuisines**: Parsed from `json['cuisines']`, an array of objects. Each object's `name` field (e.g., "Burgers", "Chicken") is mapped to a `List<String>`. Defaults to an empty list if null.
-  ```dart
-  cuisines: (json['cuisines'] as List<dynamic>?)
-      ?.map((cuisine) => cuisine['name'] as String)
-      .toList() ?? [],
+The `Restaurant` class uses `json_annotation` and `json_serializable` for automatic JSON parsing:
+- **Dependencies**: Added `json_annotation: ^4.8.1`, `json_serializable: ^6.7.1`, and `build_runner: ^2.4.6`.
+- **Code Generation**: Run `flutter pub run build_runner build --delete-conflicting-outputs` to generate `restaurant.g.dart`.
+- **Fields**:
+  - `name`: Direct mapping with a default value.
+  - `cuisines`: Custom parsing extracts `name` from each cuisine object.
+  - `rating`: Custom parsing from `rating.starRating`.
+  - `address`: Custom parsing from `address.firstLine`.
 
 - **Rating**: Source: Retrieved from `json['rating']['starRating']` (e.g., 4.2) as a number, cast to `double`.
 Parsing: Uses null-safe access and defaults to 0.0 if missing.

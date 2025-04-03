@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:justeatmockup/widgets/user_location_aware.dart';
 import '../services/api_service.dart';
 import '../models/restaurant.dart';
 
@@ -67,54 +69,71 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<Restaurant>>(
-              future: restaurantsFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No restaurants found'));
-                }
-
-                final restaurants = snapshot.data!;
-                return ListView.builder(
-                  itemCount: restaurants.length,
-                  itemBuilder: (context, index) {
-                    final restaurant = restaurants[index];
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      elevation: 3,
-                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      color: restaurant.rating < 4.0
-                        ? const Color.fromARGB(255, 136, 242, 170).withOpacity(0.8)
-                        : (restaurant.rating < 4.5
-                          ? const Color.fromARGB(255, 246, 243, 82).withOpacity(0.8)
-                          : const Color.fromRGBO(238, 162, 164, 0.8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              restaurant.name,
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Text('Address: ${restaurant.address}'),
-                            Text('Rating: ${restaurant.rating}'),
-                            Text('Cuisines: ${restaurant.cuisines.join(', ')}'),
-                          ],
+            child: 
+              UserLocationAwareWidget(
+                loader: (BuildContext context) => FractionallySizedBox(
+                    widthFactor: 1.0,
+                    child: SizedBox(
+                      height: 180,
+                      child: Container(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
                         ),
                       ),
-                    );
-                  },
-                );
-              },
-            ),
+                    ),
+                ),
+                builder: (BuildContext context, GeoPoint userLocation) {
+                  return FutureBuilder<List<Restaurant>>(
+                    future: restaurantsFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: Text('No restaurants found'));
+                      }
+
+                      final restaurants = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: restaurants.length,
+                        itemBuilder: (context, index) {
+                          final restaurant = restaurants[index];
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 3,
+                            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                            color: restaurant.rating < 4.0
+                              ? const Color.fromARGB(255, 136, 242, 170).withOpacity(0.8)
+                              : (restaurant.rating < 4.5
+                                ? const Color.fromARGB(255, 246, 243, 82).withOpacity(0.8)
+                                : const Color.fromRGBO(238, 162, 164, 0.8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    restaurant.name,
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text('Address: ${restaurant.address}'),
+                                  Text('Rating: ${restaurant.rating}'),
+                                  Text('Cuisines: ${restaurant.cuisines.join(', ')}'),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              )
           ),
         ],
       ),
