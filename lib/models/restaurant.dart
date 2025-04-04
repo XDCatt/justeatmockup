@@ -1,8 +1,19 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:justeatmockup/models/rating.dart';
+import 'address.dart';
+
+part 'restaurant.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Restaurant {
   final String name;
+
+  @JsonKey(fromJson: _cuisinesFromJson)
   final List<String> cuisines;
-  final double rating;
-  final String address;
+
+  final Rating rating;
+
+  final Address address;
 
   Restaurant({
     required this.name,
@@ -11,17 +22,12 @@ class Restaurant {
     required this.address,
   });
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) {
-    // Extract cuisines from the list of cuisine objects
-    final cuisineList = (json['cuisines'] as List<dynamic>?)
-        ?.map((cuisine) => cuisine['name'] as String)
-        .toList() ?? [];
+  factory Restaurant.fromJson(Map<String, dynamic> json) => _$RestaurantFromJson(json);
 
-    return Restaurant(
-      name: json['name'] ?? 'Unknown Restaurant',
-      cuisines: cuisineList,
-      rating: (json['rating']?['starRating'] as num?)?.toDouble() ?? 0.0,
-      address: json['address']?['firstLine'] ?? 'No address available',
-    );
+  Map<String, dynamic> toJson() => _$RestaurantToJson(this);
+
+  static List<String> _cuisinesFromJson(List<dynamic>? cuisines) {
+    return cuisines?.map((cuisine) => cuisine['name'] as String).toList() ?? [];
   }
+
 }

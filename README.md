@@ -20,6 +20,9 @@ This Flutter app fetches restaurant data from the Just Eat Takeaway.com API and 
 ### Project Structure
 - **`lib/main.dart`**: Entry point, sets up the app with a Material theme and launches `HomeScreen`.
 - **`lib/models/restaurant.dart`**: Defines the `Restaurant` class to model the API data.
+- **`lib/models/address.dart`**: Models the `address` object with `city`, `firstLine`, `postalCode`, and `location`.
+- **`lib/models/location.dart`**: Models the nested `location` with `type` and `coordinates`.
+- **`lib/models/rating.dart`**: Models the `rating` object with `count`, `starRating`, and `userRating`.
 - **`lib/services/api_service.dart`**: Handles API requests and returns a list of `Restaurant` objects.
 - **`lib/screens/home_screen.dart`**: Renders the UI using a `ListView` of `Card` widgets.
 
@@ -29,25 +32,26 @@ This Flutter app fetches restaurant data from the Just Eat Takeaway.com API and 
 - **Parsing**: The JSON response is decoded, and the `restaurants` array is limited to the first 10 entries using `.take(10)`.
 
 ### Data Parsing in `Restaurant` Model
-The `Restaurant` class parses the required fields from the API response into a structured Dart object:
-- **Name**: Extracted from `json['name']` (e.g., "Chicken Shop - Upper Street"). Defaults to "Unknown Restaurant" if missing.
-- **Cuisines**: Parsed from `json['cuisines']`, an array of objects. Each object's `name` field (e.g., "Burgers", "Chicken") is mapped to a `List<String>`. Defaults to an empty list if null.
-  ```dart
-  cuisines: (json['cuisines'] as List<dynamic>?)
-      ?.map((cuisine) => cuisine['name'] as String)
-      .toList() ?? [],
+The `Restaurant` class uses `json_annotation` and `json_serializable`:
+- **Dependencies**: `json_annotation: ^4.8.1`, `json_serializable: ^6.7.1`, `build_runner: ^2.4.6`.
+- **Code Generation**: Run `flutter pub run build_runner build --delete-conflicting-outputs`.
+- **Fields**:
+  - `name`: Direct mapping with a default.
+  - `cuisines`: Custom parsing extracts `name` from each cuisine object.
+  - `rating`: Nested `Rating` object parsed automatically.
+  - `address`: Nested `Address` object parsed automatically.
 
-- **Rating**: Source: Retrieved from `json['rating']['starRating']` (e.g., 4.2) as a number, cast to `double`.
-Parsing: Uses null-safe access and defaults to 0.0 if missing.
-Display: Shown as "Rating: 4.2" in the UI, meeting the assignment’s requirement for a numeric value.
-  ```dart
-  rating: (json['rating']?['starRating'] as num?)?.toDouble() ?? 0.0,
-  ```
+- **Rating**
+**Model**: `Rating` class with `count` (int), `starRating` (double), and `userRating` (nullable double).
+**Parsing**: Handled by `json_serializable` via `Rating.fromJson`.
+**Display**: Uses `starRating` in the UI as the numeric rating required by the assignment.
 
 - **Address**:  Taken from `json['address']['firstLine']` (e.g., "62 Upper Street"). Defaults to "No address available" if absent.
   ```dart
   address: json['address']?['firstLine'] ?? 'No address available',
   ```
+1. Create Location model strong the coordinates fetched from API, and toGeoPoint() function which returns the cloud_firestore GeoPoint type from Firebase
+2. Added a GeoUtil file to calculate the distance  between two geographical points using the Haversine formula
 
 ### UI Design
 - Widget Choice: A FutureBuilder manages the asynchronous API call, displaying a loading spinner, error message, or the restaurant list based on the state.
@@ -62,6 +66,7 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 - Uses null-safe operators (?., ??) to handle missing or null fields gracefully.
 
 ### Key Decisions
+- Nested Models: Added `Address`, `Location`, and `Rating` models for better structure and reusability.
 - Hardcoded Postcode: Chose "SW1A1AA" to focus on displaying data rather than building an input system, per the assignment’s emphasis on presentation.
 - Minimal Dependencies: Only added http to keep the app lightweight.
 - Card Layout: Opted for Card over ListTile for a more modern, mobile-app aesthetic.
