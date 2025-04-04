@@ -15,11 +15,14 @@ class Restaurant {
 
   final Address address;
 
+  final String? logoUrl;
+
   Restaurant({
     required this.name,
     required this.cuisines,
     required this.rating,
     required this.address,
+    required this.logoUrl,
   });
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => _$RestaurantFromJson(json);
