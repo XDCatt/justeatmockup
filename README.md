@@ -50,6 +50,8 @@ The `Restaurant` class uses `json_annotation` and `json_serializable`:
   ```dart
   address: json['address']?['firstLine'] ?? 'No address available',
   ```
+1. Create Location model strong the coordinates fetched from API, and toGeoPoint() function which returns the cloud_firestore GeoPoint type from Firebase
+2. Added a GeoUtil file to calculate the distance  between two geographical points using the Haversine formula
 
 ### UI Design
 - Widget Choice: A FutureBuilder manages the asynchronous API call, displaying a loading spinner, error message, or the restaurant list based on the state.
