@@ -73,9 +73,9 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 
 ## Improvements
 - [x] Add a text field for user-input postcodes and fetch the corresponding location.
-- [ ] Enhance UI with colors or icons (e.g., star for rating).
-- Handle edge cases like missing data more gracefully.
-- Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
-- Add an avatar
-- Create features branch and go through pull-request procedures.
-- 
+- [x] Enhance UI with colors or icons (e.g., star for rating).
+- [ ] Handle edge cases like missing data more gracefully.
+- [x] Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
+- [ ] Add an avatar
+- [x] Create features branch and go through pull-request procedures.
+- [ ] Add filter based on distance/categories
