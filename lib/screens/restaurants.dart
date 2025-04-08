@@ -91,7 +91,44 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
+                        return Center(
+                        child: Card(
+                          elevation: 4,
+                          margin: const EdgeInsets.all(16),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 50,
+                                ),
+                                const SizedBox(height: 10),
+                                const Text(
+                                  'Oops! Something went wrong, please try again or contact info@justeat.com.',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                
+      
+                                const SizedBox(height: 20),
+                                ElevatedButton(
+                                  onPressed: fetchRestaurants,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange.withOpacity(0.8),
+                                  ),
+                                  child: const Text('Retry'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('No restaurants found'));
                       }
