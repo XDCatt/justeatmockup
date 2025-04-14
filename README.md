@@ -1,6 +1,12 @@
 # Restaurant Finder
 A Flutter mobile app mockup for the Just Eat Takeaway.com coding assignment.
 
+## Demo Screenshots
+![Search for PostCode](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/FA42ADAF-9F77-42B9-A603-BB0B00826CC9/Screenshot_20250414_120608.jpg?version%253D1744626072155)
+
+![Color Dinstinguish Rating Level](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/C17457B5-88AD-4AF9-B441-283C4EDCE754/Screenshot_20250414_120428.jpg?version%253D1744626169407)
+
+![Error Handling for data fetch](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/32BE8693-9FCA-4E05-85FB-D58DCE954DB8/Screenshot_20250414_120651%255B1%255D.jpg?version%253D1744626217292)
 ## How to Run
 1. Install Flutter (see [official docs](https://flutter.dev/docs/get-started/install)).
 2. Clone this repo: `git clone <your-repo-url>`.
@@ -74,8 +80,8 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 ## Improvements
 - [x] Add a text field for user-input postcodes and fetch the corresponding location.
 - [x] Enhance UI with colors or icons (e.g., star for rating).
-- [ ] Handle edge cases like missing data more gracefully.
+- [x] Handle edge cases like missing data more gracefully.
 - [x] Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
-- [ ] Add an avatar
+- [x] Add an avatar
 - [x] Create features branch and go through pull-request procedures.
 - [ ] Add filter based on distance/categories
