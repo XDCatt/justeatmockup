@@ -2,11 +2,16 @@
 A Flutter mobile app mockup for the Just Eat Takeaway.com coding assignment.
 
 ## Demo Screenshots
-![Search for PostCode](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/FA42ADAF-9F77-42B9-A603-BB0B00826CC9/Screenshot_20250414_120608.jpg?version%253D1744626072155)
+- Search for PostCode
 
-![Color Dinstinguish Rating Level](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/C17457B5-88AD-4AF9-B441-283C4EDCE754/Screenshot_20250414_120428.jpg?version%253D1744626169407)
+    <img height="390" src="resources/postcode_search.jpg" width="180"/>
+- Color Distinguish Rating Level of Restaurants
 
-![Error Handling for data fetch](https://file%252B.vscode-resource.vscode-cdn.net/Users/xiyuezhang/Library/Containers/com.apple.mail/Data/Library/Mail%2520Downloads/32BE8693-9FCA-4E05-85FB-D58DCE954DB8/Screenshot_20250414_120651%255B1%255D.jpg?version%253D1744626217292)
+    <img height="390" src="resources/color.jpg" width="180"/>
+- Error Handling ofr Data Fetch
+    
+    <img height="390" src="resources/error_handling.jpg" width="180"/>
+
 ## How to Run
 1. Install Flutter (see [official docs](https://flutter.dev/docs/get-started/install)).
 2. Clone this repo: `git clone <your-repo-url>`.
