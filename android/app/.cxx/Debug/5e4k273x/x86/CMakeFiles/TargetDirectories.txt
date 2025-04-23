@@ -1,0 +1,2 @@
+/Users/xiyuezhang/Documents/Projects/justeatmockup/android/app/.cxx/Debug/5e4k273x/x86/CMakeFiles/edit_cache.dir
+/Users/xiyuezhang/Documents/Projects/justeatmockup/android/app/.cxx/Debug/5e4k273x/x86/CMakeFiles/rebuild_cache.dir
