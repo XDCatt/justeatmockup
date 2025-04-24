@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:justeatmockup/widgets/main_button.dart';
 
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
     super.key, 
-    // this.errorMessage,
+    this.errorMessage,
     required this.onRetry
   });
 
-  // final String? errorMessage;
+  final String? errorMessage;
   final VoidCallback onRetry;
 
   @override
@@ -23,19 +24,20 @@ class ErrorCard extends StatelessWidget {
             children: [
               const Icon(Icons.error_outline, color: Colors.red, size: 50),
               const SizedBox(height: 10),
-              const Text(
+              Text(
+                errorMessage ??
                 'Oops! Something went wrong, please try again '
                 'or contact info@justeat.com.',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: onRetry,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange.withOpacity(0.8),
-                ),
-                child: const Text('Retry'),
+              MainButton(
+                onPressed: onRetry, 
+                label: 'Retry', 
+                buttonColor: Colors.orange.withOpacity(0.8),
+                textColor: Colors.white,
+                width: 100,
               ),
             ],
           ),

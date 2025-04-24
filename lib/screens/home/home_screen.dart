@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../services/api_service.dart';
-import '../widgets/search_bar.dart' as search_bar;
-import '../widgets/restaurant_list.dart';
-import '../widgets/user_location_aware.dart';
+import '../../services/api_service.dart';
+import '../../widgets/search_bar.dart' as search_bar;
+import 'widgets/restaurant_list.dart';
+import '../../widgets/user_location_aware.dart';
 
-import '../models/restaurant.dart';
+import '../../models/restaurant.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,7 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          search_bar.SearchBar(controller: postcodeController, onSearch: fetchRestaurants),
+          search_bar.SearchBar(
+            controller: postcodeController, 
+            onSearch: fetchRestaurants,
+            labelText: 'Enter UK Postcode (e.g., EC4M7RF)',
+          ),
           Expanded(
             child: UserLocationAwareWidget(
               loader: (BuildContext context) => FractionallySizedBox(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/restaurant.dart';
-import '../utils/geo_utils.dart';
+import '../../../models/restaurant.dart';
+import '../../../utils/geo_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RestaurantCard extends StatelessWidget {

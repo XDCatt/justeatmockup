@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/restaurant.dart';
+import '../../../models/restaurant.dart';
 import 'restaurant_card.dart';
-import 'error_card.dart';
+import '../../../widgets/error_card.dart';
 
 class RestaurantList extends StatelessWidget {
   const RestaurantList({
