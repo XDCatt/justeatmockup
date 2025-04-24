@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ErrorCard extends StatelessWidget {
-  const ErrorCard({super.key, required this.onRetry});
+  const ErrorCard({
+    super.key, 
+    // this.errorMessage,
+    required this.onRetry
+  });
 
+  // final String? errorMessage;
   final VoidCallback onRetry;
 
   @override

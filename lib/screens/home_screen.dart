@@ -15,35 +15,40 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _api = ApiService();
-  final _controller = TextEditingController();
-  late Future<List<Restaurant>> _restaurantsFuture;
+  final ApiService apiService = ApiService();
+  final TextEditingController postcodeController = TextEditingController();
+  late Future<List<Restaurant>>? restaurantsFuture;
 
   @override
   void initState() {
     super.initState();
-    _restaurantsFuture = _api.fetchRestaurants('SW1A1AA');
+    restaurantsFuture = apiService.fetchRestaurants('SW1A1AA');
   }
 
-  void _search() {
-    final postcode = _controller.text.trim();
-    if (postcode.isEmpty) return;
-    setState(() => _restaurantsFuture = _api.fetchRestaurants(postcode));
+  void fetchRestaurants() {
+    final postcode = postcodeController.text.trim();
+    if (postcode.isNotEmpty) {
+      setState(() {
+        restaurantsFuture = apiService.fetchRestaurants(postcode);
+      });
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    postcodeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Restaurant Finder')),
+      appBar: AppBar(
+        title: const Text('Restaurant Finder'),
+      ),
       body: Column(
         children: [
-          search_bar.SearchBar(controller: _controller, onSearch: _search),
+          search_bar.SearchBar(controller: postcodeController, onSearch: fetchRestaurants),
           Expanded(
             child: UserLocationAwareWidget(
               loader: (BuildContext context) => FractionallySizedBox(
@@ -58,15 +63,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                 ),
-              builder: (context, userLocation) => FutureBuilder(
-                future: _restaurantsFuture,
-                builder: (ctx, snapshot) => RestaurantList(
-                  snapshot: snapshot,
-                  userLocation: userLocation,
-                  onRetry: _search,
-                ),
-              ),
-            ),
+              builder: (BuildContext context, GeoPoint userLocation) {
+                  return FutureBuilder<List<Restaurant>>(
+                    future: restaurantsFuture,
+                    builder: (context, snapshot) => RestaurantList(
+                      snapshot: snapshot,
+                      userLocation: userLocation,
+                      onRetry: fetchRestaurants,
+                    ),
+                  );
+              },
+            )
           ),
         ],
       ),
