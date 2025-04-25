@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:justeatmockup/widgets/error_card.dart';
 import 'package:location/location.dart';
-import '../services/user_location_service.dart';
-import '../services/location_errors.dart';
+
+import '../repositories/user_location_repository.dart';
+import '../errors/location_errors.dart';
 
 class UserLocationAwareWidget extends StatefulWidget {
   final Widget Function(BuildContext context, GeoPoint userLocation) builder;
@@ -20,16 +21,17 @@ class UserLocationAwareWidget extends StatefulWidget {
 }
 
 class _UserLocationAwareState extends State<UserLocationAwareWidget> {
+  final locationRepo = UserLocationRepository();  
   late Future<LocationData> future;
 
   @override
   void initState() {
     super.initState();
-    future = UserLocationService.getUserLocation();
+    future = locationRepo.getUserLocation();
   }
 
   void retry() {
-    setState(() => future = UserLocationService.getUserLocation());
+    setState(() => future = locationRepo.getUserLocation());
   }
 
   @override
@@ -68,18 +70,17 @@ class _UserLocationAwareState extends State<UserLocationAwareWidget> {
           );
         }
 
-          final double? longitude = locationDataSnapshot.requireData.longitude;
-          final double? latitude = locationDataSnapshot.requireData.latitude;
-          if (longitude == null) {
-            throw Exception('User longitude is null');
-          }
-          if (latitude == null) {
-            throw Exception('User latitude is null');
-          }
+        final location = locationDataSnapshot.requireData;
+        final longitude = location.longitude;
+        final latitude  = location.latitude;
 
-          final GeoPoint userLocation = GeoPoint(latitude, longitude);
+        if (longitude == null || latitude == null) {
+          throw Exception('User latitude/longitude is null');
+        }
 
-          return widget.builder(context, userLocation);
-        });
+        final GeoPoint userLocation = GeoPoint(latitude, longitude);
+
+        return widget.builder(context, userLocation);
+      });
   }
 }
