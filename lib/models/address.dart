@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'location.dart'; // We'll create this next
+import 'location.dart'; 
 
 part 'address.g.dart';
 

@@ -4,11 +4,11 @@ import 'package:justeatmockup/widgets/main_button.dart';
 class ErrorCard extends StatelessWidget {
   const ErrorCard({
     super.key, 
-    this.errorMessage,
+    required this.errorMessage,
     required this.onRetry
   });
 
-  final String? errorMessage;
+  final String errorMessage;
   final VoidCallback onRetry;
 
   @override
@@ -25,9 +25,7 @@ class ErrorCard extends StatelessWidget {
               const Icon(Icons.error_outline, color: Colors.red, size: 50),
               const SizedBox(height: 10),
               Text(
-                errorMessage ??
-                'Oops! Something went wrong, please try again '
-                'or contact info@justeat.com.',
+                errorMessage,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

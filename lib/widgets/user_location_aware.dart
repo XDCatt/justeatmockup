@@ -64,6 +64,7 @@ class _UserLocationAwareState extends State<UserLocationAwareWidget> {
 
           return ErrorCard(
             onRetry: retry,
+            errorMessage: message,
           );
         }
 

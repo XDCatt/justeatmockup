@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../models/restaurant.dart';
 import 'restaurant_card.dart';
-import '../../../widgets/error_card.dart';
 
 class RestaurantList extends StatelessWidget {
   const RestaurantList({
@@ -18,14 +17,6 @@ class RestaurantList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (snapshot.hasError) {
-      return ErrorCard(onRetry: onRetry);
-    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-      return const Center(child: Text('No restaurants found'));
-    }
-
     final restaurants = snapshot.data!;
     return ListView.builder(
       itemCount: restaurants.length,

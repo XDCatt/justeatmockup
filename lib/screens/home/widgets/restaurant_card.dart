@@ -97,7 +97,7 @@ class RestaurantCard extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(width: 10), // Add spacing between image and text
+              const SizedBox(width: 10), 
               // Right side: Text elements in a column
               Expanded(
                 child: Column(

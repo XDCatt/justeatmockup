@@ -1,5 +1,4 @@
 /// Thrown when the user refuses to turn on the location/GPS switch
-/// (after `requestService()` has asked them).
 class LocationServiceDisabledException implements Exception {
   const LocationServiceDisabledException();
 
