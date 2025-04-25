@@ -109,18 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: UserLocationAwareWidget(
-              loader: (BuildContext context) => FractionallySizedBox(
-                    widthFactor: 1.0,
-                    child: SizedBox(
-                      height: 180,
-                      child: Container(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ),
-                ),
+              loader: (_) => const Center(child: CircularProgressIndicator()),
               builder: (BuildContext context, GeoPoint userLocation) {
                   return FutureBuilder<List<Restaurant>>(
                     future: restaurantsFuture,
