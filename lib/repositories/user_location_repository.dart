@@ -60,7 +60,6 @@ class UserLocationRepository {
         return data;
       });
 
-  /* --------------- helpers --------------- */
 
    // For fixing the SERVICE_STATUS_ERROR only
  // This eliminates the  “status couldn’t be determined on Android 14(API 34) devices (e.g. my Samsung A55)
