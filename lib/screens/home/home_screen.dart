@@ -47,14 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String getErrorMessage(Object error) {
-    if (error is SocketException) {
-      return 'No internet connection, please check your connection.';
-    } else if (error is HttpException) {
-      return 'Server error. Please try again later.';
-    } else if (error is FormatException) {
-      return 'Bad data received from the server. Please try again.';
+    if (error is SocketException || error is HttpException || error is FormatException) {
+      return error.toString();
+    } 
+    else{
+      return 'Unexpected error occurred, please try again.';
     }
-    return 'Unexpected error occurred, please try again.';
   }
 
   void fetchRestaurants() {

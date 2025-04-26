@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:synchronized/synchronized.dart';
 
 import '../services/user_location_service.dart'; 
-import '../errors/location_errors.dart';     
+import '../errors/location_failure.dart';     
 
 final _log = Logger();
 
@@ -31,17 +31,17 @@ class UserLocationRepository {
           _log.d('Requesting user to enable GPS');
           enabled = await _userLocationService.requestService();
         }
-        if (!enabled) throw const LocationServiceDisabledException();
+        if (!enabled) throw const LocationServiceDisabledFailure();
 
         // ---------- Permission flow ----------
         var perm = await _userLocationService.permissionStatus();
         if (perm == PermissionStatus.denied) perm = await _userLocationService.requestPermission();
 
         if (perm == PermissionStatus.denied) {
-          throw const PermissionDeniedException();
+          throw const LocationPermissionDeniedFailure();
         }
         if (perm == PermissionStatus.deniedForever) {
-          throw const PermissionDeniedException(forever: true);
+          throw const LocationPermissionDeniedFailure(forever: true);
         }
 
         // ---------- Cached result ----------

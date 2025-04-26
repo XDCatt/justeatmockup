@@ -4,7 +4,7 @@ import 'package:justeatmockup/widgets/error_card.dart';
 import 'package:location/location.dart';
 
 import '../repositories/user_location_repository.dart';
-import '../errors/location_errors.dart';
+import '../errors/location_failure.dart';
 
 class UserLocationAwareWidget extends StatefulWidget {
   final Widget Function(BuildContext context, GeoPoint userLocation) builder;
@@ -51,17 +51,11 @@ class _UserLocationAwareState extends State<UserLocationAwareWidget> {
         if (locationDataSnapshot.hasError) {
           final err = locationDataSnapshot.error;
           String message;
-          if (err is LocationServiceDisabledException) {
-            message = 'Location services are disabled.\n'
-                'Please turn them on and retry.';
-          } else if (err is PermissionDeniedException && !err.forever) {
-            message = 'Location permission denied.\n'
-                'Grant permission and retry.';
-          } else if (err is PermissionDeniedException && err.forever) {
-            message = 'Location permission permanently denied.\n'
-                'You must enable it in system settings.';
+          if (err is LocationServiceDisabledFailure ||
+              err is LocationPermissionDeniedFailure) {
+            message = err.toString();
           } else {
-            message = 'Unexpected error: $err';
+            message = 'Unexpected error occurred, please try again.';
           }
 
           return ErrorCard(
