@@ -8,8 +8,17 @@ class RestaurantRepository {
   RestaurantRepository(this._restaurantApiService);
 
   // Public API → returns [Restaurant]-typed entities, limited to 10 as per assignment requirements.
-  Future<List<Restaurant>> getRestaurants(String postcode) async {
+  Future<List<Restaurant>> getRestaurants(String postcode, { bool sortByRating = false, }) async {
     final rawList = await _restaurantApiService.fetchRestaurantsRaw(postcode);
+    // Business rule:
+    //  - order by rating
+    final restaruantList = rawList.take(10).map(Restaurant.fromJson).toList(growable: false);
+
+    if (sortByRating == true) {
+      restaruantList.sort((a, b) => b.rating.starRating.compareTo(a.rating.starRating));
+    }
+
+    return restaruantList;
 
     // Business rule:
     //  - limit to 10

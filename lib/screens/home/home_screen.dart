@@ -24,17 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController postcodeController = TextEditingController();
   late Future<List<Restaurant>> restaurantsFuture;
 
+  bool _sortByRating = false;
+
   @override
   void initState() {
     super.initState();
     // Default search when the screen opens
-    restaurantsFuture = restaurantRepo.getRestaurants('SW1A1AA');
+    restaurantsFuture = restaurantRepo.getRestaurants('SW1A1AA', sortByRating: false);
 
   }
 
-  Future<List<Restaurant>> safeGetRestaurants(String postcode) async {
+  Future<List<Restaurant>> safeGetRestaurants(String postcode, {bool sortByRating = false}) async {
     try {
-      return await restaurantRepo.getRestaurants(postcode);
+      return await restaurantRepo.getRestaurants(postcode, sortByRating: sortByRating);
     } on HttpException {
       throw Exception('Server error. Please try again later.');
     } on SocketException {
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void fetchRestaurants() {
+  void fetchRestaurants({bool sortByRating = false}) {
     final postcode = postcodeController.text.trim();
     // SearchBar input validation
     if (postcode.isEmpty) {
@@ -81,9 +83,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else {
       setState(() {
-        restaurantsFuture = safeGetRestaurants(postcode);
+        restaurantsFuture = safeGetRestaurants(postcode, sortByRating: sortByRating);
       });
     }
+  }
+
+  void _onSwitchChanged(bool toggleValue) {
+    setState(() {
+      _sortByRating = toggleValue;
+      restaurantsFuture = restaurantRepo.getRestaurants(postcodeController.text.trim().isEmpty 
+        ? 'SW1A1AA' 
+        : postcodeController.text.trim(),
+        sortByRating: _sortByRating
+      );
+    });
   }
 
   @override
@@ -97,12 +110,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant Finder'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: 
+              Switch(
+                  value: _sortByRating, 
+                  onChanged: _onSwitchChanged,
+                  activeColor:  Colors.orange.withOpacity(0.8),
+                  activeTrackColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  thumbColor: MaterialStateProperty.all<Color>(
+                    Colors.white /* Icons */,
+                  ),
+                  trackColor: MaterialStateProperty.all<Color>(
+                    const Color(0xFF929189)/* Icons */,
+                  ),
+              ),   
+          )
+        ],
       ),
       body: Column(
         children: [
           search_bar.SearchBar(
             controller: postcodeController, 
-            onSearch: fetchRestaurants,
+            onSearch: () => fetchRestaurants(sortByRating: _sortByRating),
             labelText: 'Enter UK Postcode (e.g., EC4M7RF)',
           ),
           Expanded(
@@ -116,12 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return ErrorCard(
-                          onRetry: fetchRestaurants, 
+                          onRetry: () => fetchRestaurants(sortByRating: _sortByRating), 
                           errorMessage: getErrorMessage(snapshot.error!),
                         );
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return ErrorCard(
-                          onRetry: fetchRestaurants, 
+                          onRetry: () => fetchRestaurants(sortByRating: _sortByRating), 
                           errorMessage: 'No restaurants found. Please try again.',
                         );
                       }
@@ -129,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return RestaurantList(
                         snapshot: snapshot,
                         userLocation: userLocation,
-                        onRetry: fetchRestaurants,
+                        onRetry: () => fetchRestaurants(sortByRating: _sortByRating),
                       );
                     }
                   );
