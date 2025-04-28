@@ -2,19 +2,21 @@ import '../services/restaurant_api_service.dart';
 import '../../models/restaurant.dart';
 
 class RestaurantRepository {
-  final RestaurantApiService remote;
+  // Private API service instance, so that the UI layer can't bypass the repository and call a service directly
+  final RestaurantApiService _restaurantApiService;
 
-  RestaurantRepository(this.remote);
+  RestaurantRepository(this._restaurantApiService);
 
-  // Public API → returns fully-typed [Restaurant] entities, limited to 10 as per assignment requirements.
+  // Public API → returns [Restaurant]-typed entities, limited to 10 as per assignment requirements.
   Future<List<Restaurant>> getRestaurants(String postcode) async {
-    final rawList = await remote.fetchRestaurantsRaw(postcode);
+    final rawList = await _restaurantApiService.fetchRestaurantsRaw(postcode);
 
-    // Business rule lives here:
+    // Business rule:
     //  - limit to 10
     //  - map to domain model
     return rawList
         .take(10)
+        // Convert to a list of Restaurant objects, meaning only contains the data needed by the presentation of the app
         .map(Restaurant.fromJson)
         .toList(growable: false);
   }

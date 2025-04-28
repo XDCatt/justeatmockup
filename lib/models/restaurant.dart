@@ -11,6 +11,7 @@ class Restaurant {
   @JsonKey(fromJson: _cuisinesFromJson)
   final List<String> cuisines;
 
+  // Nested object, so we need to use the generated code to serialize/deserialize
   final Rating rating;
 
   final Address address;
@@ -29,6 +30,7 @@ class Restaurant {
 
   Map<String, dynamic> toJson() => _$RestaurantToJson(this);
 
+  // We only need the name of the cuisine, the length of shown cuisines can be directly handled at the View
   static List<String> _cuisinesFromJson(List<dynamic>? cuisines) {
     return cuisines?.map((cuisine) => cuisine['name'] as String).toList() ?? [];
   }

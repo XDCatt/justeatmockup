@@ -10,6 +10,7 @@ import '../errors/location_failure.dart';
 final _log = Logger();
 
 class UserLocationRepository {
+  // Private API service instance, so that the UI layer can't bypass the repository and call a service directly
   final UserLocationService _userLocationService;
   final lock = Lock();
 

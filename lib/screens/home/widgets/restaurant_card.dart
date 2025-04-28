@@ -15,9 +15,6 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // … (paste the Card code you already have here; nothing
-    //     changes except `restaurant` and `userLocation` come
-    //     from the constructor)
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -48,7 +45,7 @@ class RestaurantCard extends StatelessWidget {
                         Text(
                           restaurant.name,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis, // Optional: handles overflow gracefully
+                          overflow: TextOverflow.ellipsis, // Handles overflow gracefully
                           maxLines: 3, 
                         ),
                       ],
@@ -137,8 +134,8 @@ class RestaurantCard extends StatelessWidget {
                       child: Text(
                         'Cuisines: ${restaurant.cuisines.join(', ')}',
                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis, // Handles overflow gracefully
+                        maxLines: 5, // Handles the information I wanna show directly in the View
                       ),
                     ),
                     const SizedBox(height: 10),
