@@ -6,6 +6,8 @@ import 'package:location/location.dart';
 import '../repositories/user_location_repository.dart';
 import '../errors/location_failure.dart';
 
+
+/// A widget that provides the user's native location to its child widget.
 class UserLocationAwareWidget extends StatefulWidget {
   final Widget Function(BuildContext context, GeoPoint userLocation) builder;
   final Widget Function(BuildContext context)? loader;
@@ -38,8 +40,7 @@ class _UserLocationAwareState extends State<UserLocationAwareWidget> {
   Widget build(BuildContext context) {
     return FutureBuilder<LocationData>(
         future: future,
-        builder: (BuildContext locationContext,
-            AsyncSnapshot<LocationData> locationDataSnapshot) {
+        builder: (BuildContext locationContext, AsyncSnapshot<LocationData> locationDataSnapshot) {
           if (locationDataSnapshot.connectionState == ConnectionState.waiting) {
             if (widget.loader == null) {
               return const Center(child: CircularProgressIndicator());

@@ -17,6 +17,7 @@ class Location {
 
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 
+  // Convert to GeoPoint, for storing in Firestore
   GeoPoint toGeoPoint() {
     return GeoPoint(coordinates[1], coordinates[0]);
   }

@@ -78,7 +78,7 @@ There's generally one service class per data source, its only job is to wrap an 
  - Business logic is also implemented here, for example the `restaurants` array is limited to the first 10 entries using `.take(10)`.
  - Repositories are also responsible for synchronizing the data when offline capabilities are supported, managing retry logic, and caching data.
 
-**`Models`**: Data objects, Keep alignment of domain objects within the app, procide to/from JSON that Services can use.
+**`Models`**: Data objects, Keep alignment of domain objects within the app, procide to/from JSON that Repositories can use.
  - Specifically, I used `json_serializable` to auto-generate code for serialize/deserialize, since there're nested objects included.
  - Create Location model for the coordinates fetched from API, and `toGeoPoint()`` function which returns the cloud_firestore GeoPoint type from Firebase
 2. Added a GeoUtil file to calculate the distance  between two geographical points using the Haversine formula
@@ -91,7 +91,7 @@ There's generally one service class per data source, its only job is to wrap an 
 **`Errors`**: Error handling with all exceptions through an abstract `Failure` base class, then extends each concrete case as immutable subclasses (e.g.,  `LocationServiceDisabledFailure, LocationPermissionDeniedFailure, PlatformFailure`) so every layer can pattern-match errors in a type-safe, centralized way.
 
 **`Widgets`**: Include all widgets used on more than one page.
-- User Location Aware Widget: 
+- User Location Aware Widget: A widget that provides the user's native location to its child widget
 
 ### UI Design
 - Widget Choice: A FutureBuilder manages the asynchronous API call, displaying a loading spinner, error message, or the restaurant list based on the state.
