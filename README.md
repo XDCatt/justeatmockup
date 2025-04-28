@@ -67,6 +67,7 @@ lib/
 ```
 #### Data Layer 
 References from Flutter official [docs](https://docs.flutter.dev/app-architecture/case-study/data-layer)
+
 **`Service`** are stateless Dart classes that interact with APIs, such as:
   - REST APIs
   - Databases
@@ -74,10 +75,12 @@ References from Flutter official [docs](https://docs.flutter.dev/app-architectur
   - Hardware features like location and acceleration sensors
 
 There's generally one service class per data source, its only job is to wrap an external API.
+
 **`Repositories`**: 
  - It should be the only place where that data type is mutated, namely we convert data from/to the external data format (e.g., JSON) to domain objects, implementing business logic. 
  - Business logic is also implemented here, for example the `restaurants` array is limited to the first 10 entries using `.take(10)`.
  - Repositories are also responsible for synchronizing the data when offline capabilities are supported, managing retry logic, and caching data.
+
 **`Models`**: Data objects, Keep alignment of domain objects within the app, procide to/from JSON that Services can use.
  - Specifically, I used `json_serializable` to auto-generate code for serialize/deserialize, since there're nested objects included.
  - Create Location model for the coordinates fetched from API, and `toGeoPoint()`` function which returns the cloud_firestore GeoPoint type from Firebase
@@ -87,6 +90,7 @@ There's generally one service class per data source, its only job is to wrap an 
 **`Screens`**: Full Page or high-level Widget that fully implements a specific feature.
   - Organized by features or screen function.
   - A feature folder contains all the widgets, screen layout needed for that feature.
+
 **`Errors`**: Error handling with all exceptions through an abstract `Failure` base class, then extends each concrete case as immutable subclasses (e.g.,  `LocationServiceDisabledFailure, LocationPermissionDeniedFailure, PlatformFailure`) so every layer can pattern-match errors in a type-safe, centralized way.
 
 **`Widgets`**: Include all widgets used on more than one page.
