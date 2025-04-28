@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:logger/logger.dart';
@@ -11,7 +10,7 @@ import 'package:justeatmockup/services/restaurant_api_service.dart';
 
 // Step 1: Generate mocks using mockito
 @GenerateMocks([http.Client, Logger])
-import 'restaurant_remote_service_test.mocks.dart';
+import 'restaurant_service_test.mocks.dart';
 
 void main() {
   group('RestaurantApiService', () {

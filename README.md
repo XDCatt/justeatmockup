@@ -3,14 +3,11 @@ A Flutter mobile app mockup for the Just Eat Takeaway.com coding assignment.
 
 ## Demo Screenshots
 - Search for PostCode
-
-    <img height="390" src="resources/postcode_search.jpg" width="180"/>
+  <img height="400" src="resources/postcode_search.jpg" width="180">
 - Color Distinguish Rating Level of Restaurants
-
-    <img height="390" src="resources/color.jpg" width="180"/>
+  <img height="400" src="resources/color.jpg" width="180"/>
 - Error Handling ofr Data Fetch
-    
-    <img height="390" src="resources/error_handling.jpg" width="180"/>
+  <img height="400" src="resources/error_handling.jpg" width="180"/>
 
 ## How to Run
 1. Install Flutter (see [official docs](https://flutter.dev/docs/get-started/install)).
@@ -117,10 +114,7 @@ cuisines joined into a comma-separated string (e.g., "Burgers, Chicken, Halal").
 ## Improvements
 - [x] Add a text field for user-input postcodes and fetch the corresponding location.
 - [x] Enhance UI with colors or icons (e.g., star for rating).
-- [x] Handle edge cases like missing data more gracefully.
-- [x] Add GeoPoint for location, and ask and get user's location permission for calculating the distances.
-- [x] Add an avatar
-- [x] Create features branch and go through pull-request procedures.
-- [ ] Add unittests and mock tests.
+- [ ] Add a ViewModel layer, which includes the user intention logic, managing the `states` , leaving the widgets from View layer only for rendering.
+- [ ] Add unittests and mock tests, for now there' re only two mock tests as example.
 - [ ] Set the default postcode based on user location.
 - [ ] I hardcoded base_url, should introduce `flutter_dotenv` to hold secrets
