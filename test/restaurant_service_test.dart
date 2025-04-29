@@ -8,7 +8,7 @@ import 'package:logger/logger.dart';
 
 import 'package:justeatmockup/services/restaurant_api_service.dart'; 
 
-// Step 1: Generate mocks using mockito
+// Generate mocks using mockito
 @GenerateMocks([http.Client, Logger])
 import 'restaurant_service_test.mocks.dart';
 
@@ -38,6 +38,8 @@ void main() {
           .thenAnswer((_) async => http.Response(jsonEncode(expectedJson), 200));
 
       final result = await service.fetchRestaurantsRaw(postcode);
+
+      expect(result, equals(expectedJson['restaurants']));
 
       expect(result, isA<List<Map<String, dynamic>>>());
       expect(result.length, 2);

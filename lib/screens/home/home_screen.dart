@@ -111,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Restaurant Finder'),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: 
+          
               Switch(
                   value: _sortByRating, 
                   onChanged: _onSwitchChanged,
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Color(0xFF929189)/* Icons */,
                   ),
               ),   
-          )
+          
         ],
       ),
       body: Column(
