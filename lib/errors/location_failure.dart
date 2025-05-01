@@ -27,7 +27,8 @@ final class LocationPermissionDeniedFailure extends LocationFailure {
 
   @override
   String toString() =>
-      'LocationPermissionDeniedFailure(forever: $forever): $message';
+    //  'LocationPermissionDeniedFailure(forever: $forever): $message';
+     message;
 }
 
 

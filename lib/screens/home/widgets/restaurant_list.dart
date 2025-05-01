@@ -6,18 +6,18 @@ import 'restaurant_card.dart';
 class RestaurantList extends StatelessWidget {
   const RestaurantList({
     super.key,
-    required this.snapshot,
+    required this.restaurants,
     required this.userLocation,
     required this.onRetry,
   });
 
-  final AsyncSnapshot<List<Restaurant>> snapshot;
+  final List<Restaurant> restaurants;
   final GeoPoint userLocation;
   final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
-    final restaurants = snapshot.data!;
+    //final restaurants = snapshot.data!;
     return ListView.builder(
       itemCount: restaurants.length,
       itemBuilder: (context, index) => RestaurantCard(

@@ -67,7 +67,7 @@ References from Flutter official [docs](https://docs.flutter.dev/app-architectur
 
 **`Service`** are stateless Dart classes that interact with APIs, such as:
   - REST APIs
-  - Databases
+  - Local Databases
   - OS services like Contacts/Calendar
   - Hardware features like location and acceleration sensors
 

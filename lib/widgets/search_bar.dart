@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:justeatmockup/widgets/main_button.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
@@ -7,35 +6,41 @@ class SearchBar extends StatelessWidget {
     required this.controller,
     required this.onSearch,
     required this.labelText,
+    this.validator,
   });
 
   final TextEditingController controller;
   final VoidCallback onSearch;
   final String? labelText;
+  final String? Function(String?)? validator;
+
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                labelText: labelText,
-                border: OutlineInputBorder(),
-              ),
-              onSubmitted: (_) => onSearch(),
+    // Give the embedded TextFormField its own Form so we don’t have to create
+    // one in every screen that uses SearchBar.
+    return Form(
+      key: _formKey, // Use a unique key to avoid conflicts with other forms
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: TextFormField(
+        controller: controller,
+        validator: validator,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.search,
+        style: const TextStyle(fontSize: 16),
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.search),
+              onPressed: () {
+                // If the validator passes, perform the search.
+                if (_formKey.currentState!.validate()) onSearch();
+              },
             ),
-          ),
-          const SizedBox(width: 10),
-          MainButton(onPressed: onSearch, label: 'Search', 
-            buttonColor: Colors.orange.withOpacity(0.8),
-            textColor: Colors.white,
-            width: 100,
-          ),
-        ],
+        ),
       ),
     );
   }

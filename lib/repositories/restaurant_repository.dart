@@ -23,14 +23,5 @@ class RestaurantRepository {
     }
 
     return restaruantList;
-
-    // Business rule:
-    //  - limit to 10
-    //  - map to domain model
-    return rawList
-        .take(10)
-        // Convert to a list of Restaurant objects, meaning only contains the data needed by the presentation of the app
-        .map(Restaurant.fromJson)
-        .toList(growable: false);
   }
 }
